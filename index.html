@@ -3,38 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+        content="GNPM: Geometric-Aware Neural Parametric Models. A geometric-aware, fully unsupervised parametric model that disentangles shape and pose latent spaces of 4D dynamics from point clouds, without dense correspondence supervision.">
+  <meta name="keywords" content="GNPM, Neural Parametric Models, 4D Reconstruction, Point Clouds, Dense Correspondences, Deformable Shapes">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GNPM: Geometric Neural Parametric Model</title>
+  <title>GNPM: Geometric-Aware Neural Parametric Models</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-PYVRSFMDRL');
-
-
-
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/index_gnpm.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -43,437 +34,402 @@
   <script src="./static/js/index.js"></script>
 </head>
 <body>
+<div class="wrapper">
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <div class="navbar-menu">
+  <div class="navbar-menu" id="navbarMenu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
+      <a class="navbar-item" href="https://www.mirgahney.com/" target="_blank">
+        <span class="icon"><i class="fas fa-home"></i></span>
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-
-        </a>
+        <a class="navbar-link">More Research</a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="">
-          </a>
-          <a class="navbar-item" href="">
-
-          </a>
+          <a class="navbar-item" href="https://www.mirgahney.com/#papers" target="_blank">All Papers</a>
+          <a class="navbar-item" href="https://www.mirgahney.com/DynamicSurf.io/" target="_blank">DynamicSurf</a>
+          <a class="navbar-item" href="https://www.mirgahney.com/rfdm.io/" target="_blank">RDM</a>
         </div>
       </div>
     </div>
-
   </div>
 </nav>
 
-
+<!-- Hero / title -->
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">GNPM: Geometric Neural Parametric Model</h1>
+          <h1 class="title is-1 publication-title">GNPM: Geometric-Aware Neural Parametric Models</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=KNXYC1EAAAAJ&hl=en">Mirgahney Mohamed</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="http://www0.cs.ucl.ac.uk/staff/L.Agapito/">Lourdes Agapito</a><sup>1</sup>,</span>
-            <!--
-            <span class="author-block">
-              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
+              <a href="https://scholar.google.com/citations?user=KNXYC1EAAAAJ&hl=en" target="_blank">Mirgahney Mohamed</a><sup>1</sup>,&nbsp;
             </span>
             <span class="author-block">
-              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
+              <a href="http://www0.cs.ucl.ac.uk/staff/L.Agapito/" target="_blank">Lourdes Agapito</a><sup>1</sup>
             </span>
-            <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
-            </span>
-            -->
           </div>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>University College London</span>
-            <!--
-            <span class="author-block"><sup>2</sup>Google Research</span>
-            -->
+          </div>
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">2022 International Conference on 3D Vision (3DV)</span>
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. -->
+              <!-- Paper -->
               <span class="link-block">
-                <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10044454"
+                <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10044454" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Paper</span>
                 </a>
               </span>
-              <!--
+              <!-- arXiv -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
+                <a href="https://arxiv.org/abs/2209.10621" target="_blank"
                    class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
                   <span>arXiv</span>
                 </a>
               </span>
-              -->
-              <!-- Video Link. -->
-              <!--
+              <!-- Video -->
               <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
+                <a href="#qualitative-videos" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
                   <span>Video</span>
                 </a>
               </span>
-              -->
-              <!-- Code Link. -->
+              <!-- Code -->
               <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code (Coming Soon)</span>
+                </a>
               </span>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!--
+
+<!-- Teaser figure -->
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop height="100%">
-        <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/teaser.mp4"
-                type="video/mp4">
-      </video>
+      <div class="figure-block">
+        <img src="./static/images/GNPM/teaser.png" alt="GNPM reconstructs dense, time-consistent correspondences for clothed-human point-cloud sequences">
+      </div>
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
+        <b>Dense, time-consistent correspondences from raw point clouds.</b>
+        GNPM learns disentangled shape and pose latent spaces directly from posed 3D scans, recovering dense
+        correspondences (right, colour-coded) without ever seeing ground-truth correspondence during training.
       </h2>
     </div>
   </div>
 </section>
 
+<section class="hero is-light is-small"></section>
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
--->
-
+<!-- Abstract -->
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We propose Geometric Neural Parametric Models (GNPM), a learned parametric model that takes into account the local structure of data to learn disentangled shapes and pose latent spaces of 4D dynamics, using a geometric-aware architecture on point clouds.
-            Temporally consistent 3D deformations are estimated without the need for dense correspondences at training time, by exploiting cycle consistency.
-            Besides its ability to learn dense correspondences, GNPMs also enable latent space manipulations such as interpolation and shape/pose transfer.
-            We evaluate GNPMs on various datasets of clothed humans and show that it achieves comparable performance to state-of-the-art methods that require dense correspondences during training.
+            We propose Geometric Neural Parametric Models (GNPM), a learned parametric model that takes into account
+            the local structure of data to learn disentangled shapes and pose latent spaces of 4D dynamics, using a
+            geometric-aware architecture on point clouds. Temporally consistent 3D deformations are estimated
+            without the need for dense correspondences at training time, by exploiting cycle consistency. Besides
+            its ability to learn dense correspondences, GNPMs also enable latent space manipulations such as
+            interpolation and shape/pose transfer. We evaluate GNPMs on various datasets of clothed humans and show
+            that it achieves comparable performance to state-of-the-art methods that require dense correspondences
+            during training.
           </p>
-          <!--
-          -->
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/mOhymRFV49s?si=ma67Mmm4T3TZ5rZA"
-                  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-
-          </iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
   </div>
 </section>
 
-
+<!-- Method -->
 <section class="section">
   <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <!--
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop height="100%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      -->
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <!--
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
-            </p>
-            <video id="matting-video" controls height="100%">
-              <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    -->
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
-      <!--
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-      -->
-        <!-- Interpolating. -->
-      <!--
-        <h3 class="title is-4">Interpolating states</h3>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Method Overview</h2>
         <div class="content has-text-justified">
           <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
+            GNPM chooses point clouds as its shape representation and adopts <b>EdgeConv</b> layers so that local
+            geometric structure &mdash; not just individual point coordinates &mdash; drives the deformation model.
+            The network is conditioned on two learnable latent codes: a per-identity <b>shape</b> code and a
+            per-frame <b>pose</b> code, jointly optimised with the network weights in an auto-decoder fashion. This
+            disentanglement is what later enables shape/pose transfer and interpolation directly in latent space.
           </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="https://homes.cs.washington.edu/~kpar/nerfies/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="https://homes.cs.washington.edu/~kpar/nerfies/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/>
-        -->
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-      <!--
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
           <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
+            Because dense correspondence annotations are expensive and rarely available, GNPM learns them instead
+            through a <b>self-supervision cycle</b>: a forward network deforms an input posed shape to a canonical
+            T-pose, and a backward network deforms it back to the original pose. Minimising the cycle-consistency
+            error between the reconstructed and input shapes lets the model learn dense, time-consistent
+            correspondences with no ground-truth annotation at all. To stop the cycle collapsing to a trivial
+            identity mapping, and to prevent correspondence flipping under extreme motion (e.g. crossed arms), a
+            symmetric ICP loss and temporal smoothness terms regularise both networks during training. Once trained,
+            new identities and sequences can be fit purely by optimising the shape/pose latent codes at test time,
+            with the network weights kept frozen.
           </p>
         </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 width="75%">
-            <source src="https://homes.cs.washington.edu/~kpar/nerfies/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="figure-block">
+          <img src="./static/images/GNPM/self_cycle.png" alt="GNPM self-supervision cycle: forward network maps a posed scan to canonical T-pose, backward network maps it back">
         </div>
-        -->
-        <!--/ Re-rendering. -->
-
+        <p class="figure-caption">
+          <b>Self-supervision cycle.</b> Our model maps an input scan to its canonical T-pose and then back to the
+          deformed shape, enforcing cycle consistency. In this way, we learn dense correspondences without any
+          ground truth annotations. Additionally, we disentangle shape and pose by learning two embeddings that are
+          jointly optimised with the weights of the graph neural networks.
+        </p>
       </div>
     </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-  <!--
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-    -->
-    <!--/ Concurrent Work. -->
-
   </div>
 </section>
+
+<!-- Qualitative results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Qualitative Results</h2>
+
+        <div class="figure-block">
+          <img src="./static/images/GNPM/sparse_dense_multi.png" alt="Dense correspondence estimation on CAPE and D-FAUST, compared against ground truth">
+        </div>
+        <p class="figure-caption">
+          <b>Time-consistent dense correspondence estimation on CAPE and D-FAUST.</b> Ground-truth dense
+          correspondence maps (top) versus GNPM's predictions (bottom), for a set of posed 3D scans from each
+          dataset. Colour encodes correspondence across frames.
+        </p>
+
+        <div class="figure-block">
+          <img src="./static/images/GNPM/mano.png" alt="GNPM dense correspondence results on the MANO hand dataset compared with ground truth">
+        </div>
+        <p class="figure-caption">
+          <b>Time-consistent dense correspondence estimation on MANO.</b> Results of dense correspondence estimation
+          for 3D point-cloud hand inputs from the MANO dataset, shown alongside ground-truth dense correspondences.
+          Despite the challenging deformations shown by hands, GNPM recovers high-quality dense 4D temporal
+          tracking.
+        </p>
+
+        <div class="figure-block">
+          <img src="./static/images/GNPM/sp_transfer.png" alt="Shape and pose transfer in GNPM's disentangled latent space">
+        </div>
+        <p class="figure-caption">
+          <b>Shape and pose transfer in latent space.</b> We can transfer a given identity to a posed shape (shape
+          transfer). In addition, given a source identity in different poses, we can repose a target identity with
+          the poses of the source (pose transfer).
+        </p>
+
+        <div class="figure-block">
+          <img src="./static/images/GNPM/deformed_clust.png" alt="Unsupervised 3D part segmentation obtained by clustering GNPM's learned EdgeConv features">
+        </div>
+        <p class="figure-caption">
+          <b>Unsupervised 3D part segmentation with clustering on learned feature space with EdgeConv.</b> In the
+          left column, the clusters are computed with K-means using 7 clusters on the features of the first
+          EdgeConv layer. In the right column, we experiment with different numbers of clusters and observe that
+          increasing the number of clusters leads to fewer semantically meaningful parts. No part labels were used
+          during training &mdash; this segmentation falls out of the learned geometric features.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Qualitative videos -->
+<section class="section" id="qualitative-videos">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Qualitative Video Results</h2>
+        <p>A walkthrough of GNPM's method and results.</p>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/mOhymRFV49s" title="GNPM: Geometric-Aware Neural Parametric Models"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quantitative results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Quantitative Results</h2>
+        <p class="has-text-left" style="margin-bottom:0.5rem;">
+          <span class="legend-swatch cell-best"></span>best (lowest error / most efficient)
+        </p>
+
+        <h4 class="title is-5 has-text-left">CAPE &mdash; self-supervised, complete-scan input</h4>
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th class="method-name">Method</th><th>Input</th>
+                <th>EPE &darr;</th><th>C-<i>l</i><sub>2</sub> (&times;10<sup>-3</sup>) &darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="method-name">NPM</td><td>3D scan</td><td class="cell-best">0.231</td><td>0.019</td></tr>
+              <tr class="ours"><td class="method-name">GNPM (K 10, ours)</td><td>3D scan</td><td>0.287</td><td class="cell-best">0.0122</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption">
+          <b>Comparison with NPM on real scans of CAPE.</b> GNPM requires full scans as input, so NPM is also
+          evaluated on complete input scans for a fair comparison &mdash; unlike GNPM, NPM can take partial depth
+          observations at test time, but it requires known dense correspondences at training time, which GNPM does
+          not.
+        </p>
+
+        <h4 class="title is-5 has-text-left" style="margin-top:2rem;">D-FAUST &mdash; self-supervised, complete-scan input</h4>
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th class="method-name">Method</th><th>Input</th>
+                <th>EPE &darr;</th><th>C-<i>l</i><sub>2</sub> (&times;10<sup>-3</sup>) &darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="method-name">ONet 4D</td><td>3D scan</td><td>&ndash;</td><td>0.028</td></tr>
+              <tr><td class="method-name">OFlow</td><td>3D scan</td><td>&ndash;</td><td>0.031</td></tr>
+              <tr class="ours"><td class="method-name">GNPM (K 10, ours)</td><td>3D scan</td><td class="cell-best">0.253</td><td class="cell-best">0.0094</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption">
+          All methods take 3D scans as input, and GNPM achieves the lowest Chamfer distance error. OFlow works only
+          on sequences of up to 17 frames, so its result is averaged over sub-sequences of that length.
+        </p>
+
+        <h4 class="title is-5 has-text-left" style="margin-top:2rem;">Ablation &mdash; geometric inductive bias (CAPE)</h4>
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th class="method-name">Method</th>
+                <th>EPE &darr;</th><th>C-<i>l</i><sub>2</sub> (&times;10<sup>-3</sup>) &darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="method-name">Self-supervision (MLP)</td><td>0.515</td><td>0.0635</td></tr>
+              <tr class="ours"><td class="method-name">Self-supervision (EdgeConv, ours)</td><td class="cell-best">0.287</td><td class="cell-best">0.0122</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption">
+          Replacing all EdgeConv layers with MLPs (following NPM's architecture choices) removes the local
+          neighbourhood structure the deformation field relies on, and reconstruction quality degrades sharply.
+        </p>
+        <div class="figure-block">
+          <img src="./static/images/GNPM/mlp_vs_edge.png" alt="MLP-based architecture struggles to model arm deformation on CAPE, unlike the EdgeConv-based architecture">
+        </div>
+        <p class="figure-caption">
+          <b>Qualitative evaluation of geometric inductive bias on CAPE.</b> We replace all EdgeConv layers with
+          MLPs following the NPM architecture choices. The MLP-based architecture struggles to model arm
+          deformation, whereas the EdgeConv-based architecture does not suffer from this issue.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Computational efficiency -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Computational Efficiency</h2>
+        <div class="content has-text-justified">
+          <p>
+            Enforcing geometric structure with EdgeConv is naturally more expensive than a plain MLP, since it
+            requires a k-nearest-neighbour graph at every layer. We implement this k-NN step symbolically with the
+            <a href="https://www.kernel-operations.io/keops/" target="_blank">KeOps</a> library rather than
+            materialising a dense pairwise-distance matrix, giving a <b>2.3&ndash;12&times; speed gain, depending on
+            sample size</b>, which is what allows GNPM to run at a computational cost comparable to a standard
+            MLP-based model.
+          </p>
+          <p>
+            This efficiency carries through to test-time fitting: GNPM finds shape and pose latents for a new
+            sequence far faster than NPM, which requires dense correspondence supervision at training time. On a
+            200-frame input sequence, GNPM's test-time optimisation (self-supervised or supervised variant) takes a
+            fraction of NPM's total optimisation time.
+          </p>
+        </div>
+        <div class="table-scroll">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th class="method-name">Method</th><th>Input</th>
+                <th>EPE &darr;</th><th>C-<i>l</i><sub>2</sub> (&times;10<sup>-3</sup>) &darr;</th>
+                <th>Test-time (h) &darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="method-name">NPM</td><td>3D scan</td><td class="cell-best">0.231</td><td>0.019</td><td>37.85</td></tr>
+              <tr class="ours"><td class="method-name">GNPM-supervised (K 10, ours)</td><td>3D scan</td><td>0.337</td><td>0.015</td><td class="cell-best">0.19</td></tr>
+              <tr class="ours"><td class="method-name">GNPM (K 10, ours)</td><td>3D scan</td><td>0.287</td><td>0.012</td><td class="cell-best">0.25</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="figure-caption">
+          Total test-time optimisation on a 200-frame input from CAPE. Both GNPM variants fit a new sequence roughly
+          two orders of magnitude faster than NPM, which requires known dense correspondences at training time.
+          Separately, on a 100-frame sequence, GNPM's self-supervised test-time optimisation takes about 20 minutes
+          on a GeForce RTX 3080, versus the &sim;4 hours NPM reports on a GeForce RTX 3090 for a similar length
+          sequence (different GPUs, as reported in each work).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>
-      @inproceedings{mohamed2022gnpm,
-      title={GNPM: Geometric-Aware Neural Parametric Models},
-      author={Mohamed, Mirgahney and Agapito, Lourdes},
-      booktitle={2022 International Conference on 3D Vision (3DV)},
-      pages={166--175},
-      year={2022},
-      organization={IEEE}
-    }
-    </code></pre>
+    <pre><code>@inproceedings{mohamed2022gnpm,
+  title={GNPM: Geometric-Aware Neural Parametric Models},
+  author={Mohamed, Mirgahney and Agapito, Lourdes},
+  booktitle={2022 International Conference on 3D Vision (3DV)},
+  pages={166--175},
+  year={2022},
+  organization={IEEE}
+}</code></pre>
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="https://homes.cs.washington.edu/~kpar/nerfies/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
-        </div>
-      </div>
-    </div>
+<section class="section" id="Acknowledgement">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgement</h2>
+    <p>We referred to the project page of <a href="https://nerfies.github.io/" target="_blank">Nerfies</a> when creating this project page.</p>
   </div>
-</footer>
+</section>
 
+</div>
 </body>
 </html>

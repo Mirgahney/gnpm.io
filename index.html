@@ -398,8 +398,8 @@
           </table>
         </div>
         <p class="figure-caption">
-          Total test-time optimisation on a 200-frame input from CAPE. Both GNPM variants fit a new sequence roughly
-          two orders of magnitude faster than NPM, which requires known dense correspondences at training time.
+          Total test-time optimisation on a 200-frame input from CAPE. GNPM-supervised and GNPM take 0.19 h and 0.25 h
+          respectively, versus 37.85 h for NPM, which requires known dense correspondences at training time.
           Separately, on a 100-frame sequence, GNPM's self-supervised test-time optimisation takes about 20 minutes
           on a GeForce RTX 3080, versus the &sim;4 hours NPM reports on a GeForce RTX 3090 for a similar length
           sequence (different GPUs, as reported in each work).
